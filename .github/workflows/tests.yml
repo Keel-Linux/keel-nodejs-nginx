@@ -1,0 +1,21 @@
+# The gate of this repository (docs/ci-cd.md of the keel repository):
+#   appliance / build-and-boot   the layer is fetched from the mirror,
+#                                verified, assembled, booted in LXC and
+#                                checked. It skips with a notice while the
+#                                layer is not published, so the gate is in
+#                                place before the first build lands.
+# The job is gated on the organization variable KEEL_LXC_RUNNER, because a job
+# aimed at a label no runner carries stays queued until GitHub cancels it.
+name: tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  appliance:
+    if: vars.KEEL_LXC_RUNNER == 'true'
+    uses: keel-linux/.github/.github/workflows/test-appliance.yml@main
+    with:
+      appliance: nodejs-nginx
+      parent: core
+      timeout: 60

@@ -7,6 +7,10 @@
 #                                that changes the recipe is not exercised by
 #                                it. A layer that has never been published
 #                                fails the job instead of passing it.
+#                                It has never passed here: the layer is
+#                                published, but this repository has no
+#                                tests/boot-test.sh for it to run, so it
+#                                stops after keel verify (issue 3).
 # The job is gated on the organization variable KEEL_LXC_RUNNER, because a job
 # aimed at a label no runner carries stays queued until GitHub cancels it.
 name: tests
